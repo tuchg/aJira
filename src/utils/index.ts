@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
 
 /**
  * 清理对象空值
  * @param obj
  * @returns {*}
  */
-export const cleanObject = (obj) => {
+export const cleanObject = (obj: object) => {
   const result = { ...obj };
   Object.keys(result).forEach((key) => {
-    let value = result[key];
+    let obj_key = key as keyof typeof obj;
+    let value = result[obj_key];
     if (isFalsy(value)) {
-      delete result[key];
+      delete result[obj_key];
     }
   });
   return result;
@@ -23,7 +24,7 @@ export const cleanObject = (obj) => {
  * 使用空数组的副作用，仅在页面渲染时触发一次
  * @param callback
  */
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   // 不允许在普通函数中使用 hook函数
   useEffect(() => {
     callback();
@@ -38,7 +39,8 @@ export const useMount = (callback) => {
  * @param delay
  * @returns {unknown}
  */
-export const useDebounce = (func, delay) => {
+// todo 可以泛型规范，解决输入输出类型匹配
+export const useDebounce = (func: object, delay?: number) => {
   /*  const useBounce = (func, delay) => {
       let timeout; // 闭包为何能复用该变量？
       return () => {
