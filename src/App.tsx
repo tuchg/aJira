@@ -1,15 +1,14 @@
 import React from "react";
 import "./App.css";
-import { ProjectListPage } from "./pages/project-list";
-import { TsReactTest } from "./pages/test/try-use-arry";
-import { LoginPage } from "./pages/login";
+import { useAuth } from "./context/auth-context";
+import { AuthenticatedApp } from "./authenticated-app";
+import { UnauthenticatedApp } from "./unauthenticated-app";
 
 function App() {
+  const { user } = useAuth();
   return (
     <div className="App">
-      {/*<ProjectListPage />*/}
-      {/*<TsReactTest />*/}
-      <LoginPage />
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </div>
   );
 }
