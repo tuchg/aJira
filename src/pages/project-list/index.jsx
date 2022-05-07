@@ -3,7 +3,7 @@ import { SearchPanel } from "./search-panel";
 import { useEffect, useState } from "react";
 import { List } from "./list";
 import qs from "qs";
-import { cleanObject } from "../../utils";
+import { cleanObject, useMount } from "../../utils";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -24,13 +24,14 @@ export const ProjectListPage = () => {
       }
     });
   }, [param]);
-  useEffect(() => {
+
+  useMount(() => {
     fetch(`${apiURL}/users`).then(async resp => {
       if (resp.ok) {
         setUsers(await resp.json());
       }
     });
-  }, []); // 空数组，页面渲染时触发一次
+  });
   return <div>
     <SearchPanel users={users} param={param} setParam={setParam} />
     <List list={list} users={users} />
