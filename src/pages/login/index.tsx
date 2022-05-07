@@ -1,9 +1,8 @@
-import { FormEvent } from "react";
-import { login } from "../../auth-provider";
-
-const apiURL = process.env.REACT_APP_API_URL;
+import { FormEvent, useContext } from "react";
+import { useAuth } from "../../context/auth-context";
 
 export const LoginPage = () => {
+  const { login, user } = useAuth();
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     const username = (evt.currentTarget.elements[0] as HTMLInputElement).value;
@@ -13,6 +12,14 @@ export const LoginPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {user ? (
+        <div>
+          登录成功,用户名:{user?.name}
+          token:{user?.token}
+        </div>
+      ) : (
+        ""
+      )}
       <div>
         <label htmlFor="username">用户名</label>
         <input type="text" id={"username"} />
