@@ -1,5 +1,6 @@
 import { useAuth } from "../context/auth-context";
 import { Button, Form, Input } from "antd";
+import { LoginButton } from "./index";
 
 export const RegisterPage = () => {
   const { register } = useAuth();
@@ -22,9 +23,9 @@ export const RegisterPage = () => {
         <Input placeholder={"密码"} type="password" id={"password"} />
       </Form.Item>
       <Form.Item>
-        <Button type={"primary"} htmlType={"submit"}>
+        <LoginButton type={"primary"} htmlType={"submit"}>
           注册
-        </Button>
+        </LoginButton>
       </Form.Item>
     </Form>
   );

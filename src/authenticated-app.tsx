@@ -1,11 +1,12 @@
 import { ProjectListPage } from "./pages/project-list";
 import { useAuth } from "./context/auth-context";
+import { Button } from "antd";
 
 export const AuthenticatedApp = () => {
   const { logout } = useAuth();
   return (
     <div>
-      <button onClick={logout}>登出</button>
+      <Button onClick={logout}>登出</Button>
       <ProjectListPage />
     </div>
   );
