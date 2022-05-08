@@ -2,11 +2,8 @@ import React from "react";
 import { SearchPanel } from "./search-panel";
 import { useEffect, useState } from "react";
 import { List } from "./list";
-import qs from "qs";
 import { cleanObject, useDebounce, useMount } from "../../utils";
 import { useHTTP } from "../../utils/http";
-
-const apiURL = process.env.REACT_APP_API_URL;
 
 export const ProjectListPage = () => {
   const [param, setParam] = useState({
