@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { List } from "./list";
 import qs from "qs";
 import { cleanObject, useDebounce, useMount } from "../../utils";
+import { useHTTP } from "../../utils/http";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -15,25 +16,15 @@ export const ProjectListPage = () => {
   //外部如何获取共享数据，引起状态提升
   const [list, setList] = useState([]);
   const [users, setUsers] = useState([]);
-  const debounceParam = useDebounce(param, 2000);
-
+  const debounceParam = useDebounce(param, 200);
+  const client = useHTTP();
   // 监听param改变，触发时重新请求数据
   useEffect(() => {
-    fetch(
-      `${apiURL}/projects?${qs.stringify(cleanObject(debounceParam))}`
-    ).then(async (resp) => {
-      if (resp.ok) {
-        setList(await resp.json());
-      }
-    });
+    client("projects", { data: cleanObject(debounceParam) }).then(setList);
   }, [debounceParam]);
 
   useMount(() => {
-    fetch(`${apiURL}/users`).then(async (resp) => {
-      if (resp.ok) {
-        setUsers(await resp.json());
-      }
-    });
+    client("users").then(setUsers);
   });
   return (
     <div>

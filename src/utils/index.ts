@@ -39,7 +39,6 @@ export const useMount = (callback: () => void) => {
  * @param delay
  * @returns {unknown}
  */
-// todo 可以泛型规范，解决输入输出类型匹配
 export const useDebounce = <V>(func: V, delay?: number) => {
   /*  const useBounce = (func, delay) => {
       let timeout; // 闭包为何能复用该变量？
