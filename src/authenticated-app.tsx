@@ -1,21 +1,32 @@
 import { ProjectListPage } from "./pages/project-list";
 import { useAuth } from "./context/auth-context";
-import { Button } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
+import { ReactComponent as Logo } from "assets/logo.svg";
 
 export const AuthenticatedApp = () => {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   return (
     <Container>
       <Header between={true}>
         <LeftHeader gap={true}>
-          <h3>Logo</h3>
+          <Logo width={"18rem"} height={"5rem"} />
           <h3>项目</h3>
           <h3>用户</h3>
         </LeftHeader>
         <RightHeader>
-          <Button onClick={logout}>登出</Button>
+          <Dropdown
+            overlay={
+              <Menu>
+                <Menu.Item key={"logout"}>
+                  <a onClick={logout}>登出</a>
+                </Menu.Item>
+              </Menu>
+            }
+          >
+            <a onClick={(e) => e.preventDefault()}> Hi, {user?.name}</a>
+          </Dropdown>
         </RightHeader>
       </Header>
       <Main>
@@ -32,7 +43,11 @@ const Container = styled.div`
 `;
 
 //grid-area用于起名
-const Header = styled(Row)``;
+const Header = styled(Row)`
+  padding: 3.2rem;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+  z-index: 1;
+`;
 const LeftHeader = styled(Row)``;
 const RightHeader = styled.div``;
 
