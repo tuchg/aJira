@@ -2,7 +2,7 @@ import React from "react";
 import { SearchPanel } from "./search-panel";
 import { useState } from "react";
 import { List } from "./list";
-import { useDebounce } from "../../utils";
+import { useDebounce, useDocumentTitle } from "../../utils";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
@@ -18,6 +18,8 @@ export const ProjectListPage = () => {
   const debounceParam = useDebounce(param, 1000);
   const { isLoading, error, data: list } = useProjects(debounceParam);
   const { data: users } = useUsers();
+
+  useDocumentTitle("项目列表", false);
 
   // // 监听param改变，触发时重新请求数据
   // useEffect(() => {
@@ -38,6 +40,9 @@ export const ProjectListPage = () => {
 
   return (
     <Container>
+      {/*<Helmet>*/}
+      {/*  <title>项目列表</title>*/}
+      {/*</Helmet>*/}
       <h1>项目列表</h1>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (

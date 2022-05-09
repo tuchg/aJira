@@ -78,3 +78,20 @@ export const useArray = <T>(initialArray: T[]) => {
     },
   };
 };
+
+export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
+  const oldTitle = document.title;
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  useEffect(() => {
+    // 创造闭包环境保证oldTitle
+    return () => {
+      if (!keepOnUnmount) {
+        document.title = oldTitle;
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
