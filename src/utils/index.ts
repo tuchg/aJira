@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value);
-
+export const isVoid = (value: unknown) =>
+  value === undefined || value === null || value === "";
 /**
  * 清理对象空值
+ * object-> [key:string]:unknown 约束接收真正的函数
  * @param obj
  * @returns {*}
  */
-export const cleanObject = (obj: object) => {
+export const cleanObject = (obj: { [key: string]: unknown }) => {
   const result = { ...obj };
   Object.keys(result).forEach((key) => {
-    let obj_key = key as keyof typeof obj;
-    let value = result[obj_key];
-    if (isFalsy(value)) {
-      delete result[obj_key];
+    let value = result[key];
+    if (isVoid(value)) {
+      delete result[key];
     }
   });
   return result;
