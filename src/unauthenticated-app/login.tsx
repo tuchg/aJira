@@ -2,11 +2,11 @@ import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LoginButton } from "./index";
 
-export const LoginPage = () => {
+export const LoginPage = ({ onError }: { onError: (error: Error) => void }) => {
   const { login, user } = useAuth();
 
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values);
+    login(values).catch(onError);
   };
 
   return (

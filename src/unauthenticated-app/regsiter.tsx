@@ -2,10 +2,25 @@ import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LoginButton } from "./index";
 
-export const RegisterPage = () => {
+export const RegisterPage = ({
+  onError,
+}: {
+  onError: (error: Error) => void;
+}) => {
   const { register } = useAuth();
-  const handleSubmit = (values: { username: string; password: string }) => {
-    register(values);
+  const handleSubmit = ({
+    cpassword,
+    ...values
+  }: {
+    username: string;
+    password: string;
+    cpassword: string;
+  }) => {
+    if (cpassword !== values.password) {
+      onError(new Error("请确认两次密码输入相同"));
+      return;
+    }
+    register(values).catch(onError);
   };
 
   return (
@@ -21,6 +36,12 @@ export const RegisterPage = () => {
         rules={[{ required: true, message: "输入密码" }]}
       >
         <Input placeholder={"密码"} type="password" id={"password"} />
+      </Form.Item>
+      <Form.Item
+        name={"cpassword"}
+        rules={[{ required: true, message: "再次输入密码" }]}
+      >
+        <Input placeholder={"确认密码"} type="password" id={"cpassword"} />
       </Form.Item>
       <Form.Item>
         <LoginButton type={"primary"} htmlType={"submit"}>
