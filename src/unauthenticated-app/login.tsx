@@ -1,12 +1,13 @@
 import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LoginButton } from "./index";
+import { useAsync } from "../utils/use-async";
 
 export const LoginPage = ({ onError }: { onError: (error: Error) => void }) => {
   const { login, user } = useAuth();
-
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values).catch(onError);
+    run(login(values)).catch(onError);
   };
 
   return (
@@ -32,7 +33,7 @@ export const LoginPage = ({ onError }: { onError: (error: Error) => void }) => {
         <Input placeholder={"密码"} type="password" id={"password"} />
       </Form.Item>
       <Form.Item>
-        <LoginButton type={"primary"} htmlType={"submit"}>
+        <LoginButton loading={isLoading} type={"primary"} htmlType={"submit"}>
           登录
         </LoginButton>
       </Form.Item>

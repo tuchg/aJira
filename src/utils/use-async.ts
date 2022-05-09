@@ -11,7 +11,14 @@ const defaultState: State<null> = {
   data: null,
   error: null,
 };
-export const useAsync = <D>(initialState?: State<D>) => {
+const defaultConfig = {
+  throwOnError: false,
+};
+export const useAsync = <D>(
+  initialState?: State<D>,
+  initialConfig?: typeof defaultConfig
+) => {
+  const config = { ...defaultConfig, ...initialConfig };
   const [state, setState] = useState<State<D>>({
     ...defaultState,
     ...initialState,
@@ -40,7 +47,10 @@ export const useAsync = <D>(initialState?: State<D>) => {
       })
       .catch((err) => {
         setError(err);
-        return err;
+        if (config.throwOnError)
+          // 直接return error的话 外层无法捕捉到
+          return Promise.reject(err);
+        else return err;
       });
   };
   return {

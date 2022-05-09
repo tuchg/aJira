@@ -1,6 +1,7 @@
 import { useAuth } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LoginButton } from "./index";
+import { useAsync } from "../utils/use-async";
 
 export const RegisterPage = ({
   onError,
@@ -8,6 +9,8 @@ export const RegisterPage = ({
   onError: (error: Error) => void;
 }) => {
   const { register } = useAuth();
+  const { run, isLoading } = useAsync(undefined, { throwOnError: true });
+
   const handleSubmit = ({
     cpassword,
     ...values
@@ -20,7 +23,7 @@ export const RegisterPage = ({
       onError(new Error("请确认两次密码输入相同"));
       return;
     }
-    register(values).catch(onError);
+    run(register(values)).catch(onError);
   };
 
   return (
@@ -44,7 +47,7 @@ export const RegisterPage = ({
         <Input placeholder={"确认密码"} type="password" id={"cpassword"} />
       </Form.Item>
       <Form.Item>
-        <LoginButton type={"primary"} htmlType={"submit"}>
+        <LoginButton loading={isLoading} type={"primary"} htmlType={"submit"}>
           注册
         </LoginButton>
       </Form.Item>
