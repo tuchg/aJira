@@ -1,4 +1,3 @@
-import { Project } from "../pages/project-list/list";
 import { useHTTP } from "./http";
 import { useAsync } from "./use-async";
 import { useEffect } from "react";
