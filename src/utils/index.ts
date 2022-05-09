@@ -29,6 +29,8 @@ export const useMount = (callback: () => void) => {
   // 不允许在普通函数中使用 hook函数
   useEffect(() => {
     callback();
+    // TODO 依赖项callback会造成无限循环，与useCallback和useMemo有关
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // 空数组，仅页面渲染时触发一次
 };
 

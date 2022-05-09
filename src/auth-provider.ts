@@ -1,5 +1,4 @@
 import { User } from "pages/project-list/search-panel";
-import exp from "constants";
 
 const localStorageKey = "__auth_provider_token__";
 const apiURL = process.env.REACT_APP_API_URL;

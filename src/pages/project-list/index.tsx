@@ -19,6 +19,7 @@ export const ProjectListPage = () => {
   // 监听param改变，触发时重新请求数据
   useEffect(() => {
     client("projects", { data: cleanObject(debounceParam) }).then(setList);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceParam]);
 
   useMount(() => {

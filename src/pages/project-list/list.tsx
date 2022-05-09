@@ -55,7 +55,9 @@ export const List = ({ list, users }: ListProps) => {
           },
         },
       ]}
-      dataSource={list}
+      dataSource={list.map((v, i) => {
+        return { ...v, key: i };
+      })}
     />
   );
 };

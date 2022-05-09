@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import * as auth from "auth-provider";
 import { User } from "pages/project-list/search-panel";
-import { createDeflateRaw } from "zlib";
 import { http } from "../utils/http";
 import { useMount } from "../utils";
 
