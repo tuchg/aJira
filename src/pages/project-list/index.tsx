@@ -7,12 +7,14 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
+import { useQueryParam } from "../../utils/url";
 
 export const ProjectListPage = () => {
-  const [param, setParam] = useState({
+  const [, setParam] = useState({
     name: "",
     personId: "",
   });
+  const [param] = useQueryParam(["name", "personId"]);
 
   //外部如何获取共享数据，引起状态提升
   const debounceParam = useDebounce(param, 1000);
@@ -52,6 +54,9 @@ export const ProjectListPage = () => {
     </Container>
   );
 };
+
+ProjectListPage.whyDidYouRender = true;
+
 const Container = styled.div`
   padding: 3.2rem;
 `;
