@@ -10,11 +10,7 @@ import { useUsers } from "../../utils/user";
 import { useQueryParam } from "../../utils/url";
 
 export const ProjectListPage = () => {
-  const [, setParam] = useState({
-    name: "",
-    personId: "",
-  });
-  const [param] = useQueryParam(["name", "personId"]);
+  const [param, setParam] = useQueryParam(["name", "personId"]);
 
   //外部如何获取共享数据，引起状态提升
   const debounceParam = useDebounce(param, 1000);
