@@ -4,9 +4,10 @@ import { Button, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { Row } from "./components/lib";
 import { ReactComponent as Logo } from "assets/logo.svg";
-import { Route, Routes } from "react-router";
+import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { ProjectPage } from "./pages/project";
+import { resetRoute } from "./utils";
 
 export const AuthenticatedApp = () => {
   return (
@@ -18,6 +19,8 @@ export const AuthenticatedApp = () => {
           <Routes>
             <Route path={"/projects"} element={<ProjectListPage />} />
             <Route path={"/projects/:projectId/*"} element={<ProjectPage />} />
+            {/*默认路由*/}
+            <Route path="*" element={<Navigate to="/projects" />} />
           </Routes>
         </BrowserRouter>
       </Main>
@@ -30,7 +33,9 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <LeftHeader gap={true}>
-        <Logo width={"18rem"} height={"5rem"} />
+        <Button type={"link"} onClick={resetRoute}>
+          <Logo width={"10rem"} height={"3rem"} />
+        </Button>
         <h3>项目</h3>
         <h3>用户</h3>
       </LeftHeader>
