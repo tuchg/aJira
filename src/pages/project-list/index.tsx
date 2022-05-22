@@ -1,23 +1,21 @@
 import React from "react";
 import { SearchPanel } from "./search-panel";
-import { useState } from "react";
 import { List } from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
-import { useQueryParam } from "../../utils/url";
+import { useProjectsSearchParam } from "./util";
 
 export const ProjectListPage = () => {
-  const [param, setParam] = useQueryParam(["name", "personId"]);
+  useDocumentTitle("项目列表", false);
 
+  const [param, setParam] = useProjectsSearchParam();
   //外部如何获取共享数据，引起状态提升
   const debounceParam = useDebounce(param, 1000);
   const { isLoading, error, data: list } = useProjects(debounceParam);
   const { data: users } = useUsers();
-
-  useDocumentTitle("项目列表", false);
 
   // // 监听param改变，触发时重新请求数据
   // useEffect(() => {
