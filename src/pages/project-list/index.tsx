@@ -14,7 +14,8 @@ export const ProjectListPage = () => {
   const [param, setParam] = useProjectsSearchParam();
   //外部如何获取共享数据，引起状态提升
   const debounceParam = useDebounce(param, 1000);
-  const { isLoading, error, data: list } = useProjects(debounceParam);
+  // 重新刷新一遍
+  const { isLoading, error, data: list, retry } = useProjects(debounceParam);
   const { data: users } = useUsers();
 
   // // 监听param改变，触发时重新请求数据
@@ -44,7 +45,12 @@ export const ProjectListPage = () => {
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
-      <List loading={isLoading} dataSource={list || []} users={users || []} />
+      <List
+        refresh={retry}
+        loading={isLoading}
+        dataSource={list || []}
+        users={users || []}
+      />
     </Container>
   );
 };

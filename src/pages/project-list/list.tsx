@@ -18,12 +18,14 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => void;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   // 延迟求值
-  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(props.refresh);
 
   return (
     <Table

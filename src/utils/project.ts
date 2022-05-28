@@ -12,9 +12,12 @@ export const useProjects = (param?: Partial<Project>) => {
   const client = useHTTP();
 
   const { run, ...result } = useAsync<Project[]>();
+  const fetchProjects = () =>
+    client("projects", { data: cleanObject(param || {}) });
+
   // 监听param改变，触发时重新请求数据
   useEffect(() => {
-    run(client("projects", { data: cleanObject(param || {}) }));
+    run(fetchProjects(), { retry: fetchProjects });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
   return result;

@@ -23,6 +23,8 @@ export const useAsync = <D>(
     ...defaultState,
     ...initialState,
   });
+  // useState传入函数的惰性初始化，会在初始化时执行一次，所以要用useState保存函数，不可直接传入函数
+  const [retry, setRetry] = useState(() => () => {});
   const setData = (data: D) =>
     setState({
       data,
@@ -35,10 +37,16 @@ export const useAsync = <D>(
       status: "error",
       data: null,
     });
-  const run = (promise: Promise<D>) => {
+  const run = (
+    promise: Promise<D>,
+    runConfig?: { retry: () => Promise<D> }
+  ) => {
     if (!promise || !promise.then) {
       throw new Error("请传入 Promise 类型数据");
     }
+    setRetry(() => () => {
+      if (runConfig) run(runConfig?.retry(), runConfig);
+    });
     setState({ ...state, status: "loading" });
     return promise
       .then((data) => {
@@ -53,6 +61,11 @@ export const useAsync = <D>(
         else return err;
       });
   };
+
+  // const retry = () => {
+  //   run();
+  // };
+
   return {
     isIdle: state.status === "idle",
     isLoading: state.status === "loading",
@@ -61,6 +74,10 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
+    /**
+     * 被调用时，重新run（）,让state刷新
+     */
+    retry,
     ...state,
   };
 };
