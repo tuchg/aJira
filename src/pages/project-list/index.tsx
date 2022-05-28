@@ -3,14 +3,14 @@ import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import styled from "@emotion/styled";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectsSearchParam } from "./util";
 import { Row } from "../../components/lib";
-import { ProjectModalOpenProps } from "../../types";
+import { ProjectButtonProps } from "../../types";
 
-export const ProjectListPage = (props: ProjectModalOpenProps) => {
+export const ProjectListPage = (props: ProjectButtonProps) => {
   useDocumentTitle("项目列表", false);
 
   const [param, setParam] = useProjectsSearchParam();
@@ -44,16 +44,14 @@ export const ProjectListPage = (props: ProjectModalOpenProps) => {
       {/*</Helmet>*/}
       <Row between>
         <h1>项目列表</h1>
-        <Button onClick={() => props.setProjectModalOpen(true)}>
-          创建项目
-        </Button>
+        {props.projectButton}
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        setProjectModalOpen={props.setProjectModalOpen}
+        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}

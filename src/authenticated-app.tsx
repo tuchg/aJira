@@ -17,7 +17,16 @@ export const AuthenticatedApp = () => {
 
   return (
     <Container>
-      <PageHeader setProjectModalOpen={setProjectModalOpen} />
+      <PageHeader
+        projectButton={
+          <ButtonNoPadding
+            onClick={() => setProjectModalOpen(true)}
+            type={"link"}
+          >
+            创建项目
+          </ButtonNoPadding>
+        }
+      />
       <Main>
         {/*<Router>作为路由间共享信息的上下文*/}
         <BrowserRouter>
@@ -25,7 +34,16 @@ export const AuthenticatedApp = () => {
             <Route
               path={"/projects"}
               element={
-                <ProjectListPage setProjectModalOpen={setProjectModalOpen} />
+                <ProjectListPage
+                  projectButton={
+                    <ButtonNoPadding
+                      onClick={() => setProjectModalOpen(true)}
+                      type={"link"}
+                    >
+                      创建项目
+                    </ButtonNoPadding>
+                  }
+                />
               }
             />
             <Route path={"/projects/:projectId/*"} element={<ProjectPage />} />
@@ -43,16 +61,14 @@ export const AuthenticatedApp = () => {
   );
 };
 
-const PageHeader = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void;
-}) => {
+const PageHeader = (props: { projectButton: JSX.Element }) => {
   return (
     <Header between={true}>
       <LeftHeader gap={true}>
         <ButtonNoPadding type={"link"} onClick={resetRoute}>
           <Logo width={"10rem"} height={"3rem"} />
         </ButtonNoPadding>
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <ProjectPopover projectButton={props.projectButton} />
         <span>用户</span>
       </LeftHeader>
       <RightHeader>

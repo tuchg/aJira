@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
-import { ProjectModalOpenProps } from "../../types";
+import { ProjectButtonProps } from "../../types";
 
 //TODO id改number
 export interface Project {
@@ -18,7 +18,7 @@ export interface Project {
   created: number;
 }
 
-interface ListProps extends TableProps<Project>, ProjectModalOpenProps {
+interface ListProps extends TableProps<Project>, ProjectButtonProps {
   users: User[];
   refresh?: () => void;
 }
@@ -85,14 +85,7 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>
-                      <ButtonNoPadding
-                        type={"link"}
-                        onClick={() => props.setProjectModalOpen(true)}
-                      >
-                        编辑
-                      </ButtonNoPadding>
-                    </Menu.Item>
+                    <Menu.Item key={"edit"}>{props.projectButton}</Menu.Item>
                   </Menu>
                 }
               >
