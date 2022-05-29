@@ -1,5 +1,7 @@
 import { useQueryParam } from "../../utils/url";
 import { useMemo } from "react";
+import { useProject } from "../../utils/project";
+import { useSearchParams } from "react-router-dom";
 
 /**
  * URL？name=&personId=的组件状态解析封装
@@ -25,12 +27,26 @@ export const useProjectModal = () => {
   const [{ projectCreate }, setProjectCreate] = useQueryParam([
     "projectCreate",
   ]);
+  const [{ editingProjectId }, setEditingProjectId] = useQueryParam([
+    "editingProjectId",
+  ]);
+
+  const { data: editingProject, isLoading } = useProject(
+    Number(editingProjectId)
+  );
+  const [_, setUrlParams] = useSearchParams();
+
   const open = () => setProjectCreate({ projectCreate: true });
-  const close = () => setProjectCreate({ projectCreate: undefined });
+  const close = () => setUrlParams({ projectCreate: "", editingProjectId: "" });
+  const startEdit = (id: number) =>
+    setEditingProjectId({ editingProjectId: id });
 
   return {
-    projectCreate: projectCreate === "true",
+    projectModalOpen: projectCreate === "true" || Boolean(editingProject),
     open,
     close,
+    startEdit,
+    editingProject,
+    isLoading,
   };
 };

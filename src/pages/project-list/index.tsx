@@ -3,11 +3,10 @@ import { SearchPanel } from "./search-panel";
 import { List } from "./list";
 import { useDebounce, useDocumentTitle } from "../../utils";
 import styled from "@emotion/styled";
-import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectModal, useProjectsSearchParam } from "./util";
-import { ButtonNoPadding, Row } from "../../components/lib";
+import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib";
 
 export const ProjectListPage = () => {
   useDocumentTitle("项目列表", false);
@@ -16,7 +15,11 @@ export const ProjectListPage = () => {
   //外部如何获取共享数据，引起状态提升
   const debounceParam = useDebounce(param, 1000);
   // 重新刷新一遍
-  const { isLoading, error, data: list, retry } = useProjects(debounceParam);
+  const {
+    isLoading,
+    error,
+    data: list /*, retry*/,
+  } = useProjects(debounceParam);
   const { data: users } = useUsers();
 
   const { open } = useProjectModal();
@@ -49,11 +52,9 @@ export const ProjectListPage = () => {
         </ButtonNoPadding>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
-      {error ? (
-        <Typography.Text type={"danger"}>{error.message}</Typography.Text>
-      ) : null}
+      <ErrorBox error={error} />
       <List
-        refresh={retry}
+        /* refresh={retry}*/
         loading={isLoading}
         dataSource={list || []}
         users={users || []}
