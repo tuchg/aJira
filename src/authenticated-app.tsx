@@ -1,5 +1,5 @@
 import { ProjectListPage } from "./pages/project-list";
-import { useAuth } from "./context/auth-context";
+import { useAuthA } from "./context/auth-context";
 import { Button, Dropdown, Menu } from "antd";
 import styled from "@emotion/styled";
 import { ButtonNoPadding, Row } from "./components/lib";
@@ -50,7 +50,7 @@ const PageHeader = () => {
 };
 
 const User = () => {
-  const { logout, user } = useAuth();
+  const { logout, user } = useAuthA();
   return (
     <Dropdown
       overlay={

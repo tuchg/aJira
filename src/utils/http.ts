@@ -1,6 +1,6 @@
 import qs from "qs";
 import { logout } from "../auth-provider";
-import { useAuth } from "../context/auth-context";
+import { useAuthA } from "../context/auth-context";
 import { useCallback } from "react";
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -39,7 +39,7 @@ export const http = async (
   });
 };
 export const useHTTP = () => {
-  const { user } = useAuth();
+  const { user } = useAuthA();
   // todo Parameters ts操作符
   return useCallback(
     (...[endpoint, config]: Parameters<typeof http>) =>

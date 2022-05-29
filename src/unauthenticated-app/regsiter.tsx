@@ -1,4 +1,4 @@
-import { useAuth } from "../context/auth-context";
+import { useAuthA } from "../context/auth-context";
 import { Form, Input } from "antd";
 import { LoginButton } from "./index";
 import { useAsync } from "../utils/use-async";
@@ -8,7 +8,7 @@ export const RegisterPage = ({
 }: {
   onError: (error: Error) => void;
 }) => {
-  const { register } = useAuth();
+  const { register } = useAuthA();
   const { run, isLoading } = useAsync(undefined, { throwOnError: true });
 
   const handleSubmit = ({
