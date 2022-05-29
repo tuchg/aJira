@@ -18,3 +18,19 @@ export const useProjectsSearchParam = () => {
     setParam,
   ] as const;
 };
+/**
+ * 利用URL实现的modal全局状态
+ */
+export const useProjectModal = () => {
+  const [{ projectCreate }, setProjectCreate] = useQueryParam([
+    "projectCreate",
+  ]);
+  const open = () => setProjectCreate({ projectCreate: true });
+  const close = () => setProjectCreate({ projectCreate: undefined });
+
+  return {
+    projectCreate: projectCreate === "true",
+    open,
+    close,
+  };
+};

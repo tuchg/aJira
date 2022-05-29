@@ -8,67 +8,38 @@ import { Route, Routes, Navigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { ProjectPage } from "./pages/project";
 import { resetRoute } from "./utils";
-import { useState } from "react";
 import { ProjectModal } from "./pages/project-list/project-modal";
 import { ProjectPopover } from "./components/project-popover";
 
 export const AuthenticatedApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
-
   return (
     <Container>
-      <PageHeader
-        projectButton={
-          <ButtonNoPadding
-            onClick={() => setProjectModalOpen(true)}
-            type={"link"}
-          >
-            创建项目
-          </ButtonNoPadding>
-        }
-      />
-      <Main>
-        {/*<Router>作为路由间共享信息的上下文*/}
-        <BrowserRouter>
+      <BrowserRouter>
+        <PageHeader />
+        <Main>
+          {/*<Router>作为路由间共享信息的上下文*/}
           <Routes>
-            <Route
-              path={"/projects"}
-              element={
-                <ProjectListPage
-                  projectButton={
-                    <ButtonNoPadding
-                      onClick={() => setProjectModalOpen(true)}
-                      type={"link"}
-                    >
-                      创建项目
-                    </ButtonNoPadding>
-                  }
-                />
-              }
-            />
+            <Route path={"/projects"} element={<ProjectListPage />} />
             <Route path={"/projects/:projectId/*"} element={<ProjectPage />} />
             {/*默认路由*/}
             <Route path="*" element={<Navigate to="/projects" />} />
           </Routes>
-        </BrowserRouter>
-      </Main>
-      {/*全局共享*/}
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
+        </Main>
+        {/*全局共享*/}
+        <ProjectModal />
+      </BrowserRouter>
     </Container>
   );
 };
 
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
   return (
     <Header between={true}>
       <LeftHeader gap={true}>
         <ButtonNoPadding type={"link"} onClick={resetRoute}>
           <Logo width={"10rem"} height={"3rem"} />
         </ButtonNoPadding>
-        <ProjectPopover projectButton={props.projectButton} />
+        <ProjectPopover />
         <span>用户</span>
       </LeftHeader>
       <RightHeader>

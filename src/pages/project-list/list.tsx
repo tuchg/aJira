@@ -7,6 +7,7 @@ import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
 import { ProjectButtonProps } from "../../types";
+import { useProjectModal } from "./util";
 
 //TODO id改number
 export interface Project {
@@ -18,7 +19,7 @@ export interface Project {
   created: number;
 }
 
-interface ListProps extends TableProps<Project>, ProjectButtonProps {
+interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
 }
@@ -28,7 +29,7 @@ export const List = ({ users, ...props }: ListProps) => {
   // 延迟求值
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(props.refresh);
-
+  const { open } = useProjectModal();
   return (
     <Table
       rowKey={"id"}
@@ -85,7 +86,11 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>{props.projectButton}</Menu.Item>
+                    <Menu.Item key={"edit"}>
+                      <ButtonNoPadding onClick={() => open} type={"link"}>
+                        创建项目
+                      </ButtonNoPadding>
+                    </Menu.Item>
                   </Menu>
                 }
               >
