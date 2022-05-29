@@ -7,10 +7,11 @@ import { Typography } from "antd";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectsSearchParam } from "./util";
-import { Row } from "../../components/lib";
-import { ProjectButtonProps } from "../../types";
+import { ButtonNoPadding, Row } from "../../components/lib";
+import { projectListActions } from "./project-list-slice";
+import { useDispatch } from "react-redux";
 
-export const ProjectListPage = (props: ProjectButtonProps) => {
+export const ProjectListPage = () => {
   useDocumentTitle("项目列表", false);
 
   const [param, setParam] = useProjectsSearchParam();
@@ -19,6 +20,7 @@ export const ProjectListPage = (props: ProjectButtonProps) => {
   // 重新刷新一遍
   const { isLoading, error, data: list, retry } = useProjects(debounceParam);
   const { data: users } = useUsers();
+  const dispatch = useDispatch();
 
   // // 监听param改变，触发时重新请求数据
   // useEffect(() => {
@@ -44,14 +46,18 @@ export const ProjectListPage = (props: ProjectButtonProps) => {
       {/*</Helmet>*/}
       <Row between>
         <h1>项目列表</h1>
-        {props.projectButton}
+        <ButtonNoPadding
+          onClick={() => dispatch(projectListActions.openProjectModal())}
+          type={"link"}
+        >
+          创建项目
+        </ButtonNoPadding>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {error ? (
         <Typography.Text type={"danger"}>{error.message}</Typography.Text>
       ) : null}
       <List
-        projectButton={props.projectButton}
         refresh={retry}
         loading={isLoading}
         dataSource={list || []}

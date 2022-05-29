@@ -7,6 +7,8 @@ import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
 import { ProjectButtonProps } from "../../types";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "./project-list-slice";
 
 //TODO id改number
 export interface Project {
@@ -18,13 +20,14 @@ export interface Project {
   created: number;
 }
 
-interface ListProps extends TableProps<Project>, ProjectButtonProps {
+interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
+  const dispatch = useDispatch();
   // 延迟求值
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(props.refresh);
@@ -85,7 +88,16 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key={"edit"}>{props.projectButton}</Menu.Item>
+                    <Menu.Item key={"edit"}>
+                      <ButtonNoPadding
+                        onClick={() =>
+                          dispatch(projectListActions.openProjectModal())
+                        }
+                        type={"link"}
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
                   </Menu>
                 }
               >
