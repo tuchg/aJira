@@ -1,6 +1,7 @@
 import { Project } from "../pages/project-list/list";
 import { useHTTP } from "./http";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useProjectsSearchParam } from "../pages/project-list/util";
 
 /**
  * 查询 project
@@ -18,6 +19,8 @@ export const useProjects = (param?: Partial<Project>) => {
 export const useEditProject = () => {
   const client = useHTTP();
   const queryClient = useQueryClient();
+  const [searchParams] = useProjectsSearchParam();
+  const queryKey = ["projects", searchParams];
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -26,9 +29,29 @@ export const useEditProject = () => {
         method: "PATCH",
       }),
     // 成功时清理projects请求数据，触发重新刷新
-    { onSuccess: () => queryClient.invalidateQueries("projects") }
+    {
+      onSuccess: () => queryClient.invalidateQueries(queryKey),
+      async onMutate(target) {
+        const previousItems = queryClient.getQueryData(queryKey);
+        queryClient.setQueryData(queryKey, (old?: Project[]) => {
+          return (
+            old?.map((project) =>
+              project.id === target.id ? { ...project, ...target } : project
+            ) || []
+          );
+        });
+        return {
+          previousItems,
+        };
+      },
+      onError: (error, newItem, context: any) => {
+        // 失败时则回滚
+        queryClient.setQueryData(queryKey, context.previousItems);
+      },
+    }
   );
 };
+
 /**
  * 添加 project
  */
