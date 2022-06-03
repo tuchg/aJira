@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Input, Spin, Typography } from "antd";
+import { Button, Drawer, Form, Input, Spin } from "antd";
 import { useProjectModal, useProjectsQueryKey } from "./util";
 import { UserSelect } from "../../components/user-select";
 import { useAddProject, useEditProject } from "../../utils/project";

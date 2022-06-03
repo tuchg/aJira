@@ -1,7 +1,6 @@
 import { useQueryParam, useSetUrlSearchParam } from "../../utils/url";
 import { useMemo } from "react";
 import { useProject } from "../../utils/project";
-import { useSearchParams } from "react-router-dom";
 
 /**
  * URL？name=&personId=的组件状态解析封装
