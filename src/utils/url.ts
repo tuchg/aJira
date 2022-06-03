@@ -7,8 +7,9 @@ import { cleanObject } from "./index";
  * @param keys
  */
 export const useQueryParam = <K extends string>(keys: K[]) => {
-  // useState会解决对象实例比较问题
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const setUrlSearchParams = useSetUrlSearchParam();
+
   return [
     useMemo(
       () =>
@@ -19,14 +20,22 @@ export const useQueryParam = <K extends string>(keys: K[]) => {
       [searchParams]
     ),
     (params: Partial<{ [key in K]: unknown }>) => {
-      const o = cleanObject({
-        ...Object.fromEntries(searchParams),
-        ...params,
-      }) as URLSearchParamsInit;
-      return setSearchParams(o);
+      return setUrlSearchParams(params);
     },
     /**
      * as const 用于解决元组、函数解构等类型推断问题
      */
   ] as const;
+};
+
+export const useSetUrlSearchParam = () => {
+  // useState会解决对象实例比较问题
+  const [searchParams, setSearchParams] = useSearchParams();
+  return (params: { [key in string]: unknown }) => {
+    const o = cleanObject({
+      ...Object.fromEntries(searchParams),
+      ...params,
+    }) as URLSearchParamsInit;
+    return setSearchParams(o);
+  };
 };
