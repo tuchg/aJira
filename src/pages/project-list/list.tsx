@@ -91,7 +91,7 @@ export const List = ({ users, ...props }: ListProps) => {
 
 const More = ({ project }: { project: Project }) => {
   const { startEdit } = useProjectModal();
-  const editProject = (id: number) => () => startEdit(id);
+  const editProject = (id: number) => startEdit(id);
   const { mutate: deleteProject } = useDelProject(useProjectsQueryKey());
   const confirmDelProject = (id: number) => {
     Modal.confirm({
