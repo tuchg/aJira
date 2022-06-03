@@ -1,7 +1,7 @@
 import { Project } from "../pages/project-list/list";
 import { useHTTP } from "./http";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
-import { useEditConfig } from "./use-optimistic-options";
+import { useDelConfig, useEditConfig } from "./use-optimistic-options";
 
 /**
  * 查询 project
@@ -48,6 +48,20 @@ export const useAddProject = () => {
         method: "POST",
       }),
     { onSuccess: () => queryClient.invalidateQueries("projects") }
+  );
+};
+/**
+ * 删除 project
+ */
+export const useDelProject = (queryKey: QueryKey) => {
+  const client = useHTTP();
+
+  return useMutation(
+    (id: number) =>
+      client(`projects/${id}`, {
+        method: "DELETE",
+      }),
+    useDelConfig(queryKey)
   );
 };
 
