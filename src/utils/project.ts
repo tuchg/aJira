@@ -1,7 +1,7 @@
 import { Project } from "../pages/project-list/list";
 import { useHTTP } from "./http";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useProjectsSearchParam } from "../pages/project-list/util";
+import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
+import { useEditConfig } from "./use-optimistic-options";
 
 /**
  * 查询 project
@@ -16,12 +16,13 @@ export const useProjects = (param?: Partial<Project>) => {
 /**
  * 修改 project
  */
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const client = useHTTP();
-  const queryClient = useQueryClient();
-  const [searchParams] = useProjectsSearchParam();
-  const queryKey = ["projects", searchParams];
+  // 传入queryKey可避免不同页面使用组件导致的缓存不一致问题,提升通用性
+  // const [searchParams] = useProjectsSearchParam();
+  // const queryKey = ["projects", searchParams];
 
+  // useMutation一般不参与缓存
   return useMutation(
     (params: Partial<Project>) =>
       client(`projects/${params.id}`, {
@@ -29,26 +30,7 @@ export const useEditProject = () => {
         method: "PATCH",
       }),
     // 成功时清理projects请求数据，触发重新刷新
-    {
-      onSuccess: () => queryClient.invalidateQueries(queryKey),
-      async onMutate(target) {
-        const previousItems = queryClient.getQueryData(queryKey);
-        queryClient.setQueryData(queryKey, (old?: Project[]) => {
-          return (
-            old?.map((project) =>
-              project.id === target.id ? { ...project, ...target } : project
-            ) || []
-          );
-        });
-        return {
-          previousItems,
-        };
-      },
-      onError: (error, newItem, context: any) => {
-        // 失败时则回滚
-        queryClient.setQueryData(queryKey, context.previousItems);
-      },
-    }
+    useEditConfig(queryKey)
   );
 };
 

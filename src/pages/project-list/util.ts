@@ -20,6 +20,10 @@ export const useProjectsSearchParam = () => {
     setParam,
   ] as const;
 };
+export const useProjectsQueryKey = () => {
+  const [params] = useProjectsSearchParam();
+  return ["projects", params];
+};
 /**
  * 利用URL实现的modal全局状态
  */

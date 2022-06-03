@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Pin } from "../../components/pin";
 import { useEditProject } from "../../utils/project";
 import { ButtonNoPadding } from "../../components/lib";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectsQueryKey } from "./util";
 
 //TODO id改number
 export interface Project {
@@ -24,11 +24,11 @@ interface ListProps extends TableProps<Project> {
 }
 
 export const List = ({ users, ...props }: ListProps) => {
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectsQueryKey());
   // 延迟求值
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
 
-  const { open, startEdit } = useProjectModal();
+  const { startEdit } = useProjectModal();
   return (
     <Table
       rowKey={"id"}
