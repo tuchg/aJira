@@ -1,5 +1,4 @@
 import { QueryKey, useQueryClient } from "react-query";
-import { Project } from "../pages/project-list/list";
 
 /**
  * 乐观更新的配置

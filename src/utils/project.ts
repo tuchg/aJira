@@ -1,7 +1,7 @@
-import { Project } from "../pages/project-list/list";
 import { useHTTP } from "./http";
 import { QueryKey, useMutation, useQuery, useQueryClient } from "react-query";
 import { useDelConfig, useEditConfig } from "./use-optimistic-options";
+import { Project } from "../types";
 
 /**
  * 查询 project
