@@ -6,7 +6,12 @@ import styled from "@emotion/styled";
 import { useProjects } from "../../utils/project";
 import { useUsers } from "../../utils/user";
 import { useProjectModal, useProjectsSearchParam } from "./util";
-import { ButtonNoPadding, ErrorBox, Row } from "../../components/lib";
+import {
+  ButtonNoPadding,
+  ErrorBox,
+  PageContainer,
+  Row,
+} from "../../components/lib";
 
 export const ProjectListPage = () => {
   useDocumentTitle("项目列表", false);
@@ -41,7 +46,7 @@ export const ProjectListPage = () => {
   // }, [debounceParam]);
 
   return (
-    <Container>
+    <PageContainer>
       {/*<Helmet>*/}
       {/*  <title>项目列表</title>*/}
       {/*</Helmet>*/}
@@ -59,12 +64,8 @@ export const ProjectListPage = () => {
         dataSource={list || []}
         users={users || []}
       />
-    </Container>
+    </PageContainer>
   );
 };
 
 ProjectListPage.whyDidYouRender = false;
-
-const Container = styled.div`
-  padding: 3.2rem;
-`;
