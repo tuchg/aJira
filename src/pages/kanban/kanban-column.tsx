@@ -1,4 +1,4 @@
-import { Kanban } from "../../types";
+import { Kanban, Task } from "../../types";
 import { useTasks } from "../../utils/tasks";
 import { useTaskSearchParams, useTasksModal } from "./util";
 import { useTaskTypes } from "../../utils/task-type";
@@ -7,6 +7,7 @@ import bugIcon from "assets/bug.svg";
 import styled from "@emotion/styled";
 import { Card } from "antd";
 import { CreateTask } from "./create-task";
+import { Mark } from "../../components/mark";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes();
@@ -14,24 +15,33 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
   if (!name) return null;
   return <img src={name === "task" ? taskIcon : bugIcon} alt={"task-icon"} />;
 };
+
+const TaskCard = ({ task }: { task: Task }) => {
+  const { startEdit } = useTasksModal();
+  const { name: keyword } = useTaskSearchParams();
+  return (
+    <Card
+      onClick={() => startEdit(task.id)}
+      style={{ marginBottom: "0.5rem", cursor: "pointer" }}
+      key={task.id}
+    >
+      <p>
+        <Mark keyword={keyword} name={task.name} />
+      </p>
+      <TaskTypeIcon id={task.typeId} />
+    </Card>
+  );
+};
 export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
   // react query自动处理多组件queryKey的节流处理
   const { data: allTasks } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
-  const { startEdit } = useTasksModal();
   return (
     <Container>
       <h3>{kanban.name}</h3>
       <TaskContainer>
         {tasks?.map((task) => (
-          <Card
-            onClick={() => startEdit(task.id)}
-            style={{ marginBottom: "0.5rem", cursor: "pointer" }}
-            key={task.id}
-          >
-            {task.name}
-            <TaskTypeIcon id={task.typeId} />
-          </Card>
+          <TaskCard key={task.id} task={task} />
         ))}
         <CreateTask kanbanId={kanban.id} />
       </TaskContainer>

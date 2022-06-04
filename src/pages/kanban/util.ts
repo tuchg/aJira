@@ -19,7 +19,7 @@ export const useKanbansQueryKey = () => ["kanbans", useKanbanSearchParams()];
 export const useTaskSearchParams = () => {
   const [param] = useQueryParam(["name", "typeId", "processorId", "tagId"]);
   const projectId = useProjectIdInUrl();
-  const debouncedName = useDebounce(param.name, 200);
+  const debouncedName = useDebounce(param.name, 500);
   return useMemo(
     () => ({
       projectId: projectId,
@@ -28,7 +28,7 @@ export const useTaskSearchParams = () => {
       tagId: Number(param.tagId) || undefined,
       name: debouncedName,
     }),
-    [projectId, param]
+    [projectId, param, debouncedName]
   );
 };
 export const useTaskQueryKey = () => ["tasks", useKanbanSearchParams()];
