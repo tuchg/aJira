@@ -10,7 +10,6 @@ export const SearchPanel = () => {
   const setSearchParams = useSetUrlSearchParam();
   const reset = () => {
     setSearchParams({
-      projectId: undefined,
       typeId: undefined,
       processorId: undefined,
       tagId: undefined,
@@ -28,7 +27,9 @@ export const SearchPanel = () => {
       <UserSelect
         defaultOptionName={"经办人"}
         value={searchParams.processorId}
-        onChange={(value) => setSearchParams({ processorId: value })}
+        onChange={(value) => {
+          setSearchParams({ processorId: value });
+        }}
       />
       <TaskTypeSelect
         defaultOptionName={"类型"}

@@ -1,16 +1,23 @@
 import { useDocumentTitle } from "../../utils";
 import { useKanbans } from "../../utils/kanbans";
-import { useProjectInUrl, useTaskSearchParams } from "./util";
+import {
+  useKanbanSearchParams,
+  useProjectInUrl,
+  useTaskSearchParams,
+} from "./util";
 import { KanbanColumn } from "./kanban-column";
 import styled from "@emotion/styled";
 import { SearchPanel } from "./search-panel";
 import { useTasks } from "../../utils/tasks";
 import { Spin } from "antd";
 import { PageContainer } from "../../components/lib";
+import { CreateKanban } from "./create-kanban";
 
 export const KanbanPage = () => {
   useDocumentTitle("看板列表");
-  const { data: kanbans, isLoading: kanbanIsLoading } = useKanbans();
+  const { data: kanbans, isLoading: kanbanIsLoading } = useKanbans(
+    useKanbanSearchParams()
+  );
   const { data: curProject } = useProjectInUrl();
   const { isLoading: taskIsLoading } = useTasks(useTaskSearchParams());
   const isLoading = kanbanIsLoading || taskIsLoading;
@@ -25,12 +32,13 @@ export const KanbanPage = () => {
           {kanbans?.map((kanban) => (
             <KanbanColumn key={kanban.id} kanban={kanban} />
           ))}
+          <CreateKanban />
         </ColContainer>
       )}
     </PageContainer>
   );
 };
-const ColContainer = styled.div`
+export const ColContainer = styled.div`
   display: flex;
   overflow-x: scroll;
   flex: 1;
