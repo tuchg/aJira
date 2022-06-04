@@ -1,12 +1,11 @@
 import { Kanban } from "../../types";
 import { useTasks } from "../../utils/tasks";
-import { useTaskSearchParams } from "./util";
+import { useTaskSearchParams, useTasksModal } from "./util";
 import { useTaskTypes } from "../../utils/task-type";
 import taskIcon from "assets/task.svg";
 import bugIcon from "assets/bug.svg";
 import styled from "@emotion/styled";
 import { Card } from "antd";
-import { CreateKanban } from "./create-kanban";
 import { CreateTask } from "./create-task";
 
 const TaskTypeIcon = ({ id }: { id: number }) => {
@@ -19,12 +18,17 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
   // react query自动处理多组件queryKey的节流处理
   const { data: allTasks } = useTasks(useTaskSearchParams());
   const tasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
+  const { startEdit } = useTasksModal();
   return (
     <Container>
       <h3>{kanban.name}</h3>
       <TaskContainer>
         {tasks?.map((task) => (
-          <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
+          <Card
+            onClick={() => startEdit(task.id)}
+            style={{ marginBottom: "0.5rem", cursor: "pointer" }}
+            key={task.id}
+          >
             {task.name}
             <TaskTypeIcon id={task.typeId} />
           </Card>

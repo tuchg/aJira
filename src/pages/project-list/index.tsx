@@ -18,7 +18,7 @@ export const ProjectListPage = () => {
 
   const [param, setParam] = useProjectsSearchParam();
   //外部如何获取共享数据，引起状态提升
-  const debounceParam = useDebounce(param, 1000);
+  const debounceParam = useDebounce(param, 200);
   // 重新刷新一遍
   const {
     isLoading,

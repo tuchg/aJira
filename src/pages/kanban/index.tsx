@@ -12,6 +12,7 @@ import { useTasks } from "../../utils/tasks";
 import { Spin } from "antd";
 import { PageContainer } from "../../components/lib";
 import { CreateKanban } from "./create-kanban";
+import { TaskModal } from "./task-modal";
 
 export const KanbanPage = () => {
   useDocumentTitle("看板列表");
@@ -35,6 +36,7 @@ export const KanbanPage = () => {
           <CreateKanban />
         </ColContainer>
       )}
+      <TaskModal />
     </PageContainer>
   );
 };
