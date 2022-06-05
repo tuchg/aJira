@@ -16,10 +16,11 @@ import { TaskModal } from "./task-modal";
 
 export const KanbanPage = () => {
   useDocumentTitle("看板列表");
+
+  const { data: curProject } = useProjectInUrl();
   const { data: kanbans, isLoading: kanbanIsLoading } = useKanbans(
     useKanbanSearchParams()
   );
-  const { data: curProject } = useProjectInUrl();
   const { isLoading: taskIsLoading } = useTasks(useTaskSearchParams());
   const isLoading = kanbanIsLoading || taskIsLoading;
   return (

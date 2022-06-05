@@ -90,7 +90,7 @@ export const ProjectModal = () => {
   );
 };
 
-const Container = styled.div`
+export const Container = styled.div`
   flex-direction: column;
   height: 80vh;
   display: flex;
