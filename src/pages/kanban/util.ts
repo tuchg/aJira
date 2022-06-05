@@ -2,7 +2,7 @@ import { useLocation } from "react-router";
 import { useProject } from "../../utils/project";
 import { useQueryParam } from "../../utils/url";
 import { useCallback, useMemo } from "react";
-import { useTask, useTasks } from "../../utils/tasks";
+import { useTask } from "../../utils/tasks";
 import { useDebounce } from "../../utils";
 
 export const useProjectIdInUrl = () => {

@@ -10,6 +10,7 @@ import { ProjectPage } from "./pages/project";
 import { resetRoute } from "./utils";
 import { ProjectModal } from "./pages/project-list/project-modal";
 import { ProjectPopover } from "./components/project-popover";
+import { UserPopover } from "./components/user-popover";
 
 export const AuthenticatedApp = () => {
   return (
@@ -40,7 +41,7 @@ const PageHeader = () => {
           <Logo width={"10rem"} height={"3rem"} />
         </ButtonNoPadding>
         <ProjectPopover />
-        <span>用户</span>
+        <UserPopover />
       </LeftHeader>
       <RightHeader>
         <User />
