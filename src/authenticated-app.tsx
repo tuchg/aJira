@@ -15,7 +15,7 @@ import { UserPopover } from "./components/user-popover";
 export const AuthenticatedApp = () => {
   return (
     <Container>
-      <BrowserRouter>
+      <BrowserRouter basename={"/aJira"}>
         <PageHeader />
         <Main>
           {/*<Router>作为路由间共享信息的上下文*/}

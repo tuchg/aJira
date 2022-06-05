@@ -95,8 +95,7 @@ export const useDocumentTitle = (title: string, keepOnUnmount = true) => {
     };
   }, [keepOnUnmount, oldTitle]);
 };
-
-export const resetRoute = () => (window.location.href = window.location.origin);
+export const resetRoute = () => (window.location.href = "/aJira/");
 
 /**
  * 返回插件的挂载状态，若未挂载或已挂载则返回false，反之返回true

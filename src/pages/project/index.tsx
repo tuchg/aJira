@@ -31,15 +31,7 @@ export const ProjectPage = () => {
         <Routes>
           <Route path={"/kanban"} element={<KanbanPage />} />
           <Route path={"/epic"} element={<EpicPage />} />
-          <Route
-            path="*"
-            element={
-              <Navigate
-                to={window.location.pathname + "/kanban"}
-                replace={true}
-              />
-            }
-          />
+          <Route path="*" element={<Navigate to={"kanban"} replace={true} />} />
         </Routes>
       </Main>
     </Container>
