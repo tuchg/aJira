@@ -18,14 +18,20 @@ export const ProjectPage = () => {
   return (
     <Container>
       <Aside>
-        <Menu mode={"inline"} selectedKeys={[routeType]}>
-          <Menu.Item key={"kanban"}>
-            <Link to={"kanban"}>看板</Link>
-          </Menu.Item>
-          <Menu.Item key={"epic"}>
-            <Link to={"epic"}>任务组</Link>
-          </Menu.Item>
-        </Menu>
+        <Menu
+          mode={"inline"}
+          selectedKeys={[routeType]}
+          items={[
+            {
+              key: "kanban",
+              label: <Link to={"kanban"}>看板</Link>,
+            },
+            {
+              key: "epic",
+              label: <Link to={"epic"}>任务组</Link>,
+            },
+          ]}
+        />
       </Aside>
       <Main>
         <Routes>

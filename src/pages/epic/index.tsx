@@ -42,7 +42,7 @@ export const EpicPage = () => {
         dataSource={epics}
         itemLayout={"vertical"}
         renderItem={(epic) => (
-          <List.Item>
+          <List.Item key={epic.id}>
             <List.Item.Meta
               title={
                 <Row between>

@@ -96,24 +96,20 @@ const More = ({ project }: { project: Project }) => {
   return (
     <Dropdown
       overlay={
-        <Menu>
-          <Menu.Item key={"edit"}>
-            <ButtonNoPadding
-              onClick={() => editProject(project.id)}
-              type={"link"}
-            >
-              编辑
-            </ButtonNoPadding>
-          </Menu.Item>
-          <Menu.Item key={"del"}>
-            <ButtonNoPadding
-              onClick={() => confirmDelProject(project.id)}
-              type={"link"}
-            >
-              删除
-            </ButtonNoPadding>
-          </Menu.Item>
-        </Menu>
+        <Menu
+          items={[
+            {
+              key: "edit",
+              label: "编辑",
+              onClick: () => editProject(project.id),
+            },
+            {
+              key: "del",
+              label: "删除",
+              onClick: () => confirmDelProject(project.id),
+            },
+          ]}
+        />
       }
     >
       <ButtonNoPadding type={"link"}>...</ButtonNoPadding>

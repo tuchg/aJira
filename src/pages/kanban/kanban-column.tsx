@@ -67,13 +67,7 @@ const More = ({ kanban }: { kanban: Kanban }) => {
     });
   };
   const overlay = (
-    <Menu>
-      <Menu.Item>
-        <Button type={"link"} onClick={startDelete}>
-          删除
-        </Button>
-      </Menu.Item>
-    </Menu>
+    <Menu items={[{ key: "del", label: "删除", onClick: startDelete }]} />
   );
   return (
     <Dropdown overlay={overlay}>
