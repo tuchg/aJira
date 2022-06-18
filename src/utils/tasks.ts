@@ -5,7 +5,9 @@ import {
   useAddConfig,
   useDelConfig,
   useEditConfig,
+  useReorderTaskConfig,
 } from "./use-optimistic-options";
+import { SortProps } from "./kanbans";
 
 export const useTask = (id?: number) => {
   const client = useHTTP();
@@ -57,4 +59,14 @@ export const useDeleteTask = (queryKey: QueryKey) => {
       }),
     useDelConfig(queryKey)
   );
+};
+
+export const useReorderTask = (queryKey: QueryKey) => {
+  const client = useHTTP();
+  return useMutation((params: SortProps) => {
+    return client("tasks/reorder", {
+      data: params,
+      method: "POST",
+    });
+  }, useReorderTaskConfig(queryKey));
 };

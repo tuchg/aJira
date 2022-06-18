@@ -1,4 +1,6 @@
 import { QueryKey, useQueryClient } from "react-query";
+import { reorder } from "./reorder";
+import { Task } from "../types";
 
 /**
  * 乐观更新的配置
@@ -43,3 +45,18 @@ export const useEditConfig = (query: QueryKey) =>
   );
 export const useAddConfig = (query: QueryKey) =>
   useOptimisticConfig(query, (target, old) => (old ? [...old, target] : []));
+
+export const useReorderKanbanConfig = (queryKey: QueryKey) =>
+  useOptimisticConfig(queryKey, (target, old) =>
+    reorder({ list: old, ...target })
+  );
+
+export const useReorderTaskConfig = (queryKey: QueryKey) =>
+  useOptimisticConfig(queryKey, (target, old) => {
+    const orderedList = reorder({ list: old, ...target }) as Task[];
+    return orderedList.map((item) =>
+      item.id === target.fromId
+        ? { ...item, kanbanId: target.toKanbanId }
+        : item
+    );
+  });
