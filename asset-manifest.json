@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/aJira/static/css/main.a1b79a3d.css",
+    "main.js": "/aJira/static/js/main.24a5752c.js",
+    "static/js/103.4249e648.chunk.js": "/aJira/static/js/103.4249e648.chunk.js",
+    "static/js/443.e70e2fdf.chunk.js": "/aJira/static/js/443.e70e2fdf.chunk.js",
+    "static/js/839.be1000fe.chunk.js": "/aJira/static/js/839.be1000fe.chunk.js",
+    "static/js/787.0d68acbf.chunk.js": "/aJira/static/js/787.0d68acbf.chunk.js",
+    "static/media/left.svg": "/aJira/static/media/left.1a77754bcaafc725ae5c90e12b89d381.svg",
+    "static/media/right.svg": "/aJira/static/media/right.2acc28d35803babe280bea44ca32f238.svg",
+    "static/media/logo.svg": "/aJira/static/media/logo.a1c02bdc6c8da6d6bece64f8185177ad.svg",
+    "index.html": "/aJira/index.html",
+    "static/media/task.svg": "/aJira/static/media/task.a48202a2e4220cbed6055f852cd9fe7d.svg",
+    "static/media/bug.svg": "/aJira/static/media/bug.11605bc8d9f34a587f5918a035730618.svg",
+    "main.a1b79a3d.css.map": "/aJira/static/css/main.a1b79a3d.css.map",
+    "main.24a5752c.js.map": "/aJira/static/js/main.24a5752c.js.map",
+    "103.4249e648.chunk.js.map": "/aJira/static/js/103.4249e648.chunk.js.map",
+    "443.e70e2fdf.chunk.js.map": "/aJira/static/js/443.e70e2fdf.chunk.js.map",
+    "839.be1000fe.chunk.js.map": "/aJira/static/js/839.be1000fe.chunk.js.map",
+    "787.0d68acbf.chunk.js.map": "/aJira/static/js/787.0d68acbf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a1b79a3d.css",
+    "static/js/main.24a5752c.js"
+  ]
+}
