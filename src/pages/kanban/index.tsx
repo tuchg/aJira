@@ -94,7 +94,6 @@ export const useDragEnd = () => {
       if (type === "ROW") {
         const fromKanbanId = +source.droppableId;
         const toKanbanId = +destination.droppableId;
-        console.log(allTasks);
 
         const fromTask = allTasks.filter(
           (task) => task.kanbanId === fromKanbanId
@@ -112,10 +111,7 @@ export const useDragEnd = () => {
           toId: toTask?.id,
           fromKanbanId,
           toKanbanId,
-          type:
-            fromKanbanId === toKanbanId && destination.index > source.index
-              ? "after"
-              : "before",
+          type: destination.index > source.index ? "after" : "before",
         });
       }
     },

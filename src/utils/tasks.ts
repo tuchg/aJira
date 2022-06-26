@@ -69,7 +69,13 @@ export const useReorderTask = (queryKey: QueryKey) => {
   const client = useHTTP();
   return useMutation((params: SortProps) => {
     return client("tasks/reorder", {
-      data: params,
+      data: {
+        fromId: params.fromId,
+        referenceId: params.toId,
+        type: params.type,
+        fromKanbanId: params.fromKanbanId,
+        toKanbanId: params.toKanbanId,
+      },
       method: "POST",
     });
   }, useReorderTaskConfig(queryKey));

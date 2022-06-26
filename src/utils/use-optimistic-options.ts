@@ -1,7 +1,6 @@
 import { QueryKey, useQueryClient } from "react-query";
 import { reorder } from "./reorder";
 import { Task } from "../types";
-import { log } from "util";
 
 /**
  * 乐观更新的配置
@@ -13,6 +12,7 @@ export const useOptimisticConfig = (
   callback: (target: any, old?: any[]) => any[]
 ) => {
   const queryClient = useQueryClient();
+
   return {
     onSuccess: () => queryClient.invalidateQueries(queryKey),
     // 激发网络请求之前激活该函数
@@ -49,7 +49,6 @@ export const useAddConfig = (query: QueryKey) =>
 
 export const useReorderKanbanConfig = (queryKey: QueryKey) =>
   useOptimisticConfig(queryKey, (target, old) => {
-    console.log(target, old);
     return reorder({ list: old, ...target });
   });
 

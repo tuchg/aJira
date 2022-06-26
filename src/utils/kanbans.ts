@@ -36,6 +36,7 @@ export const useDeleteKanban = (queryKey: QueryKey) => {
     useDelConfig(queryKey)
   );
 };
+
 export interface SortProps {
   // 要重新排序的 item
   fromId: number;
@@ -51,7 +52,11 @@ export const useReorderKanban = (queryKey: QueryKey) => {
   const client = useHTTP();
   return useMutation((params: SortProps) => {
     return client("kanbans/reorder", {
-      data: params,
+      data: {
+        fromId: params.fromId,
+        referenceId: params.toId,
+        type: params.type,
+      },
       method: "POST",
     });
   }, useReorderKanbanConfig(queryKey));
