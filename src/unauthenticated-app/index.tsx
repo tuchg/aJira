@@ -8,7 +8,7 @@ import right from "assets/right.svg";
 import styled from "@emotion/styled";
 import { useDocumentTitle } from "../utils";
 
-export const UnauthenticatedApp = () => {
+export default () => {
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
