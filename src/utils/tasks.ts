@@ -8,6 +8,7 @@ import {
   useReorderTaskConfig,
 } from "./use-optimistic-options";
 import { SortProps } from "./kanbans";
+import { useDebounce } from "./index";
 
 export const useTask = (id?: number) => {
   const client = useHTTP();
@@ -21,10 +22,13 @@ export const useTask = (id?: number) => {
 
 export const useTasks = (param?: Partial<Task>) => {
   const client = useHTTP();
-  return useQuery<Task[], Error>(["tasks", param], () =>
-    client("tasks", { data: param })
+  const debouncedParam = { ...param, name: useDebounce(param?.name, 200) };
+
+  return useQuery<Task[]>(["tasks", debouncedParam], () =>
+    client("tasks", { data: debouncedParam })
   );
 };
+
 export const useAddTask = (queryKey: QueryKey) => {
   const client = useHTTP();
 
