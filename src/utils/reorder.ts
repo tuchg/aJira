@@ -8,21 +8,21 @@
 export const reorder = ({
   fromId,
   type,
-  referenceId,
+  toId,
   list,
 }: {
   list: { id: number }[];
   fromId: number;
   type: "after" | "before";
-  referenceId: number;
+  toId: number;
 }) => {
   const clonedList = [...list];
   // 找到fromId对应项目的下标
   const movingItemIndex = clonedList.findIndex((item) => item.id === fromId);
-  if (!referenceId) {
+  if (!toId) {
     return insertAfter([...clonedList], movingItemIndex, clonedList.length - 1);
   }
-  const targetIndex = clonedList.findIndex((item) => item.id === referenceId);
+  const targetIndex = clonedList.findIndex((item) => item.id === toId);
   const insert = type === "after" ? insertAfter : insertBefore;
   return insert([...clonedList], movingItemIndex, targetIndex);
 };
